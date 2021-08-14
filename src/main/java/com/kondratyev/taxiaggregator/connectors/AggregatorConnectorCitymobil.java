@@ -1,10 +1,9 @@
 package com.kondratyev.taxiaggregator.connectors;
 
-import com.kondratyev.taxiaggregator.domain.Location;
-import com.kondratyev.taxiaggregator.domain.Price;
-import com.kondratyev.taxiaggregator.domain.PriceLevel;
-import com.kondratyev.taxiaggregator.repositories.LocationRepository;
-import com.kondratyev.taxiaggregator.repositories.PriceRepository;
+import com.kondratyev.taxiaggregator.dummies.DummyObject;
+import com.kondratyev.taxiaggregator.requests.CreateTripRequest;
+import com.kondratyev.taxiaggregator.responses.PriceResponse;
+import com.kondratyev.taxiaggregator.responses.TripResponse;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
@@ -12,36 +11,14 @@ import org.springframework.stereotype.Component;
 @Component
 public class AggregatorConnectorCitymobil implements AggregatorConnector {
 
-    final PriceRepository priceRepository;
-    final LocationRepository locationRepository;
-
-    AggregatorConnectorCitymobil(PriceRepository priceRepository,
-                              LocationRepository locationRepository) {
-        this.priceRepository = priceRepository;
-        this.locationRepository = locationRepository;
+    @Override
+    public PriceResponse getPrice(Long userId, String fromLocation, String toLocation) {
+        log.debug("get Citymobil price. Here should be API call.");
+        return DummyObject.getPriceResponse(fromLocation, toLocation);
     }
 
     @Override
-    public Price getPrice(Long userId, String fromLocation, String toLocation) {
-        log.debug("get Citymobil price. Here should be API call.");
-
-        return dummyPrice(129, fromLocation, toLocation, PriceLevel.ECONOMY);
-    }
-
-    private Price dummyPrice(int price, String fromLocation, String toLocation, PriceLevel priceLevel) {
-
-        Price dummyPrice = new Price();
-
-        dummyPrice.setPrice(price);
-
-        Location from = new Location(fromLocation);
-        dummyPrice.setFrom(locationRepository.save(from));
-
-        Location to = new Location(toLocation);
-        dummyPrice.setTo(locationRepository.save(to));
-
-        dummyPrice.setPriceLevel(priceLevel);
-
-        return priceRepository.save(dummyPrice);
+    public TripResponse createTrip(CreateTripRequest createTripRequest) {
+        return null;
     }
 }

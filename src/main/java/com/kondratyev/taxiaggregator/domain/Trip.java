@@ -8,6 +8,12 @@ import javax.persistence.OneToOne;
 public class Trip extends BaseEntity {
 
     @OneToOne
+    private User user;
+
+    @OneToOne
+    private Price price;
+
+    @OneToOne
     private Car car;
 
     @OneToOne
@@ -35,5 +41,21 @@ public class Trip extends BaseEntity {
 
     public void setDriver(Driver driver) {
         this.driver = driver;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
+    public Price getPrice() {
+        return price;
+    }
+
+    public void setPrice(Price price) {
+        this.price = price;
     }
 }

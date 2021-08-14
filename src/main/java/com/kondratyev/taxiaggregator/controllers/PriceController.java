@@ -27,7 +27,7 @@ public class PriceController {
         log.debug("Getting prices");
 
         Map<String, Object> response = new HashMap<>();
-        response.put("result", aggregatorRequest.bestPrice(userId, fromLocation, toLocation));
+        response.put("result", aggregatorRequest.getPrice(userId, fromLocation, toLocation));
         response.put("error", null);
 
         return response;

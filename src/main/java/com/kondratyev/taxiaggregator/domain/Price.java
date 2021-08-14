@@ -1,10 +1,15 @@
 package com.kondratyev.taxiaggregator.domain;
 
+import lombok.Getter;
+import lombok.Setter;
+
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.OneToOne;
 
+@Getter
+@Setter
 @Entity
 public class Price extends BaseEntity {
 
@@ -29,35 +34,4 @@ public class Price extends BaseEntity {
         this.priceLevel = priceLevel;
     }
 
-    public int getPrice() {
-        return price;
-    }
-
-    public void setPrice(int price) {
-        this.price = price;
-    }
-
-    public Location getFrom() {
-        return from;
-    }
-
-    public void setFrom(Location from) {
-        this.from = from;
-    }
-
-    public Location getTo() {
-        return to;
-    }
-
-    public void setTo(Location to) {
-        this.to = to;
-    }
-
-    public PriceLevel getPriceLevel() {
-        return priceLevel;
-    }
-
-    public void setPriceLevel(PriceLevel priceLevel) {
-        this.priceLevel = priceLevel;
-    }
 }

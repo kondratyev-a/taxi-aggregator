@@ -1,4 +1,4 @@
-package com.kondratyev.taxiaggregator.domain;
+package com.kondratyev.taxiaggregator.responses;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

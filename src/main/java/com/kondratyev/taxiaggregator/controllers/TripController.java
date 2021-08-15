@@ -4,6 +4,8 @@ import com.kondratyev.taxiaggregator.connectors.AggregatorRequest;
 import com.kondratyev.taxiaggregator.requests.CreateTripRequest;
 import com.kondratyev.taxiaggregator.requests.DeleteTripRequest;
 import com.kondratyev.taxiaggregator.requests.UpdateTripRequest;
+import com.kondratyev.taxiaggregator.responses.DeleteTripResponse;
+import com.kondratyev.taxiaggregator.responses.TripResponse;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
 
@@ -26,9 +28,19 @@ public class TripController {
 
         log.debug("Creating a trip");
 
+        TripResponse result = null;
+        String error = null;
+
+        try {
+            result = aggregatorRequest.createTrip(createTripRequest);
+        }
+        catch(Exception e) {
+            error = e.getMessage();
+        }
+
         Map<String, Object> response = new HashMap<>();
-        response.put("result", aggregatorRequest.createTrip(createTripRequest));
-        response.put("error", null);
+        response.put("result", result);
+        response.put("error", error);
 
         return response;
     }
@@ -66,9 +78,19 @@ public class TripController {
 
         log.debug("Deleting the trip");
 
+        DeleteTripResponse result = null;
+        String error = null;
+
+        try {
+            result = aggregatorRequest.deleteTrip(deleteTripRequest);
+        }
+        catch(Exception e) {
+            error = e.getMessage();
+        }
+
         Map<String, Object> response = new HashMap<>();
-        response.put("result", aggregatorRequest.deleteTrip(deleteTripRequest));
-        response.put("error", null);
+        response.put("result", result);
+        response.put("error", error);
 
         return response;
     }

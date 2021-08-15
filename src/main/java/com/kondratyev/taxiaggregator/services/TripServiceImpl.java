@@ -3,6 +3,7 @@ package com.kondratyev.taxiaggregator.services;
 import com.kondratyev.taxiaggregator.convertors.TripResponseToTrip;
 import com.kondratyev.taxiaggregator.convertors.TripToTripResponse;
 import com.kondratyev.taxiaggregator.domain.Trip;
+import com.kondratyev.taxiaggregator.exceptions.TripNotFoundException;
 import com.kondratyev.taxiaggregator.repositories.TripRepository;
 import com.kondratyev.taxiaggregator.responses.TripResponse;
 import lombok.extern.slf4j.Slf4j;
@@ -29,7 +30,7 @@ public class TripServiceImpl implements TripService {
     public Trip findByTripId(Long id) {
         Optional<Trip> tripOptional = tripRepository.findByTripId(id);
         if (tripOptional.isEmpty()) {
-            throw new RuntimeException("Trip not found");
+            throw new TripNotFoundException(id);
         }
         return tripOptional.get();
     }

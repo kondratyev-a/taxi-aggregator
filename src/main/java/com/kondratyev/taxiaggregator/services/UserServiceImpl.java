@@ -1,6 +1,7 @@
 package com.kondratyev.taxiaggregator.services;
 
 import com.kondratyev.taxiaggregator.domain.User;
+import com.kondratyev.taxiaggregator.exceptions.UserNotFoundException;
 import com.kondratyev.taxiaggregator.repositories.UserRepository;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -38,11 +39,14 @@ public class UserServiceImpl implements UserService {
 
     public User findByLoginAndPassword(String login, String password) {
         User user = findByLogin(login);
-        if (user != null) {
-            if (passwordEncoder.matches(password, user.getPassword())) {
-                return user;
-            }
+        if (user == null) {
+            throw new UserNotFoundException(login);
         }
-        return null;
+
+        if (!passwordEncoder.matches(password, user.getPassword())) {
+            throw new RuntimeException("Incorrect password for user with login " + login);
+        }
+        return user;
+
     }
 }

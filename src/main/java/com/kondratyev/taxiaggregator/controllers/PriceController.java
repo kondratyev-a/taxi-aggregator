@@ -1,6 +1,7 @@
 package com.kondratyev.taxiaggregator.controllers;
 
 import com.kondratyev.taxiaggregator.connectors.AggregatorRequest;
+import com.kondratyev.taxiaggregator.responses.PriceResponse;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -26,9 +27,19 @@ public class PriceController {
 
         log.debug("Getting prices");
 
+        PriceResponse result = null;
+        String error = null;
+
+        try {
+            result = aggregatorRequest.getPrice(userId, fromLocation, toLocation);
+        }
+        catch(Exception e) {
+            error = e.getMessage();
+        }
+
         Map<String, Object> response = new HashMap<>();
-        response.put("result", aggregatorRequest.getPrice(userId, fromLocation, toLocation));
-        response.put("error", null);
+        response.put("result", result);
+        response.put("error", error);
 
         return response;
     }

@@ -3,6 +3,7 @@ package com.kondratyev.taxiaggregator.services;
 import com.kondratyev.taxiaggregator.convertors.PriceResponseToPrice;
 import com.kondratyev.taxiaggregator.convertors.PriceToPriceResponse;
 import com.kondratyev.taxiaggregator.domain.Price;
+import com.kondratyev.taxiaggregator.exceptions.PriceNotFoundException;
 import com.kondratyev.taxiaggregator.repositories.PriceRepository;
 import com.kondratyev.taxiaggregator.responses.PriceResponse;
 import lombok.extern.slf4j.Slf4j;
@@ -29,7 +30,7 @@ public class PriceServiceImpl implements PriceService {
     public Price findByPriceId(Long id) {
         Optional<Price> priceOptional = priceRepository.findByPriceId(id);
         if (priceOptional.isEmpty()) {
-            throw new RuntimeException("Price not found");
+            throw new PriceNotFoundException(id);
         }
         return priceOptional.get();
     }

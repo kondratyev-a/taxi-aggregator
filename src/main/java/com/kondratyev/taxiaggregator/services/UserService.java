@@ -8,5 +8,7 @@ public interface UserService {
 
     public User findByLogin(String login);
 
+    public User findById(Long id);
+
     public User findByLoginAndPassword(String login, String password);
 }

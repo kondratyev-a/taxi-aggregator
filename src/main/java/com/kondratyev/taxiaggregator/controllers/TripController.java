@@ -4,7 +4,6 @@ import com.kondratyev.taxiaggregator.connectors.AggregatorRequest;
 import com.kondratyev.taxiaggregator.requests.CreateTripRequest;
 import com.kondratyev.taxiaggregator.requests.DeleteTripRequest;
 import com.kondratyev.taxiaggregator.requests.UpdateTripRequest;
-import com.kondratyev.taxiaggregator.responses.TripResponse;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
 
@@ -28,7 +27,7 @@ public class TripController {
         log.debug("Creating a trip");
 
         Map<String, Object> response = new HashMap<>();
-        response.put("result", new TripResponse());
+        response.put("result", aggregatorRequest.createTrip(createTripRequest));
         response.put("error", null);
 
         return response;

@@ -1,24 +1,50 @@
 package com.kondratyev.taxiaggregator.dummies;
 
-import com.kondratyev.taxiaggregator.responses.LocationResponse;
-import com.kondratyev.taxiaggregator.responses.PriceResponse;
+import com.kondratyev.taxiaggregator.domain.Price;
+import com.kondratyev.taxiaggregator.requests.CreateTripRequest;
+import com.kondratyev.taxiaggregator.responses.*;
 
 import java.util.Random;
 
 // Класс для имитации ответов от вызова методов агрегаторов
 public class DummyObject {
 
-    public static PriceResponse getPriceResponse(String fromLocation, String toLocation) {
+    public static PriceResponse getPriceResponse(Long aggregatorId, String fromLocation, String toLocation) {
 
         PriceResponse dummyPrice = new PriceResponse();
 
         Random random = new Random();
         dummyPrice.setPrice(random.nextInt(300));
+        dummyPrice.setAggregatorId(aggregatorId);
+        dummyPrice.setPriceId(2921215L);
         dummyPrice.setFrom(new LocationResponse(fromLocation));
         dummyPrice.setTo(new LocationResponse(toLocation));
         dummyPrice.setPriceLevel(1);
 
         return dummyPrice;
+    }
+
+    public static TripResponse getTripResponse(CreateTripRequest tripRequest, Price price) {
+        TripResponse tripResponse = new TripResponse();
+
+        tripResponse.setTripId(4000172L);
+        tripResponse.setUserId(tripRequest.getUserId());
+        tripResponse.setPriceId(tripRequest.getPriceId());
+        tripResponse.setFrom(tripRequest.getFrom());
+        tripResponse.setTo(tripRequest.getTo());
+        tripResponse.setPrice(price.getPrice());
+
+        DriverResponse driver = new DriverResponse();
+        driver.setRating(4.52d);
+        driver.setName("Эмильен");
+        tripResponse.setDriver(driver);
+
+        CarResponse car = new CarResponse();
+        car.setCapacity(3);
+        car.setModel("Skoda Octavia");
+        tripResponse.setCar(car);
+
+        return tripResponse;
     }
 
 }

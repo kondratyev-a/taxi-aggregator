@@ -1,5 +1,6 @@
 package com.kondratyev.taxiaggregator.connectors;
 
+import com.kondratyev.taxiaggregator.domain.Price;
 import com.kondratyev.taxiaggregator.dummies.DummyObject;
 import com.kondratyev.taxiaggregator.requests.CreateTripRequest;
 import com.kondratyev.taxiaggregator.responses.PriceResponse;
@@ -12,14 +13,20 @@ import org.springframework.stereotype.Component;
 public class AggregatorConnectorYandex implements AggregatorConnector {
 
     @Override
-    public PriceResponse getPrice(Long userId, String fromLocation, String toLocation) {
-        log.debug("get Yandex price. Here should be API call.");
-        return DummyObject.getPriceResponse(fromLocation, toLocation);
+    public Long getId() {
+        return 1L;
     }
 
     @Override
-    public TripResponse createTrip(CreateTripRequest createTripRequest) {
-        return null;
+    public PriceResponse getPrice(Long userId, String fromLocation, String toLocation) {
+        log.debug("get Yandex price. Here should be API call.");
+        return DummyObject.getPriceResponse(getId(), fromLocation, toLocation);
+    }
+
+    @Override
+    public TripResponse createTrip(CreateTripRequest createTripRequest, Price price) {
+        log.debug("create Yandex trip");
+        return DummyObject.getTripResponse(createTripRequest, price);
     }
 
 

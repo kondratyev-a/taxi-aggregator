@@ -5,6 +5,8 @@ import com.kondratyev.taxiaggregator.repositories.UserRepository;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
+
 @Service
 public class UserServiceImpl implements UserService {
 
@@ -23,6 +25,15 @@ public class UserServiceImpl implements UserService {
 
     public User findByLogin(String login) {
         return userRepository.findByLogin(login);
+    }
+
+    @Override
+    public User findById(Long id) {
+        Optional<User> userOptional = userRepository.findById(id);
+        if (userOptional.isEmpty()) {
+            throw new RuntimeException("User not found");
+        }
+        return userOptional.get();
     }
 
     public User findByLoginAndPassword(String login, String password) {

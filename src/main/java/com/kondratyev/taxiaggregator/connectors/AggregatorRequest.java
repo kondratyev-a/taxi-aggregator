@@ -1,7 +1,11 @@
 package com.kondratyev.taxiaggregator.connectors;
 
+import com.kondratyev.taxiaggregator.domain.Price;
+import com.kondratyev.taxiaggregator.requests.CreateTripRequest;
 import com.kondratyev.taxiaggregator.responses.PriceResponse;
+import com.kondratyev.taxiaggregator.responses.TripResponse;
 import com.kondratyev.taxiaggregator.services.PriceService;
+import com.kondratyev.taxiaggregator.services.TripService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
@@ -19,10 +23,13 @@ public class AggregatorRequest {
     private final List<AggregatorConnector> aggregatorConnectors;
 
     private final PriceService priceService;
+    private final TripService tripService;
 
-    AggregatorRequest(List<AggregatorConnector> aggregatorConnectors, PriceService priceService) {
+    AggregatorRequest(List<AggregatorConnector> aggregatorConnectors, PriceService priceService,
+                      TripService tripService) {
         this.aggregatorConnectors = aggregatorConnectors;
         this.priceService = priceService;
+        this.tripService = tripService;
     }
 
     public PriceResponse getPrice(Long userId, String fromLocation, String toLocation) {
@@ -55,4 +62,22 @@ public class AggregatorRequest {
 
     }
 
+    public TripResponse createTrip(CreateTripRequest tripRequest) {
+
+        // Получаем цену по идентификатору
+        Price price = priceService.findByPriceId(tripRequest.getPriceId());
+        Long aggregatorId = price.getAggregatorId();
+
+        // Вызываем все реализованные коннекторы
+        for (AggregatorConnector aggregatorConnector: aggregatorConnectors) {
+            // Вообще мне этот перебор совсем не нравится. Я думал реализовать через Factory Pattern,
+            // но это добавляет необходимость явно указывать нового агрегатора при добавлении.
+            // В общем сделал пока так, но хорошо бы переделать. Еще бы знать как.
+            if (aggregatorConnector.getId() == aggregatorId) {
+                TripResponse tripResponse = aggregatorConnector.createTrip(tripRequest, price);
+                return tripService.saveTripResponse(tripResponse);
+            }
+        }
+        return null;
+    }
 }

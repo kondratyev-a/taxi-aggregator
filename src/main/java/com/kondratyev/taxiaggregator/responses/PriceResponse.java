@@ -1,5 +1,6 @@
 package com.kondratyev.taxiaggregator.responses;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -8,6 +9,9 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 public class PriceResponse {
+
+    @JsonIgnore
+    private Long aggregatorId;
 
     private Long priceId;
     private int price;

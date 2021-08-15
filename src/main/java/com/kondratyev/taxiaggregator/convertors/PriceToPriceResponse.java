@@ -19,7 +19,7 @@ public class PriceToPriceResponse implements Converter<Price, PriceResponse> {
 
         PriceResponse priceResponse = new PriceResponse();
 
-        priceResponse.setPriceId(price.getId());
+        priceResponse.setPriceId(price.getPriceId());
         priceResponse.setPrice(price.getPrice());
         priceResponse.setPriceLevel(price.getPriceLevel().ordinal());
         priceResponse.setFrom(locationConverter.convert(price.getFrom()));

@@ -1,6 +1,7 @@
 package com.kondratyev.taxiaggregator.domain;
 
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.Entity;
@@ -10,8 +11,14 @@ import javax.persistence.OneToOne;
 
 @Getter
 @Setter
+@NoArgsConstructor
 @Entity
 public class Price extends BaseEntity {
+
+    // Идентификатор внешней системы
+    private Long priceId;
+
+    private long aggregatorId;
 
     private int price;
 
@@ -23,15 +30,5 @@ public class Price extends BaseEntity {
 
     @OneToOne
     private Location to;
-
-    public Price() {
-    }
-
-    public Price(int price, Location from, Location to, PriceLevel priceLevel) {
-        this.price = price;
-        this.from = from;
-        this.to = to;
-        this.priceLevel = priceLevel;
-    }
 
 }

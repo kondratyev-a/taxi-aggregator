@@ -1,16 +1,13 @@
-package com.kondratyev.taxiaggregator.domain;
+package com.kondratyev.taxiaggregator.responses;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import javax.persistence.Entity;
-
-@Setter
 @Getter
+@Setter
 @NoArgsConstructor
-@Entity
-public class Car extends BaseEntity {
+public class CarResponse {
 
     private String model;
     private int capacity;

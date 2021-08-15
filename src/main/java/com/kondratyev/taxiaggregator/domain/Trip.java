@@ -1,11 +1,21 @@
 package com.kondratyev.taxiaggregator.domain;
 
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
 import javax.persistence.Entity;
 import javax.persistence.OneToOne;
 
 // Если использовать имя Order, то Hibernate валится при запуске
+@Getter
+@Setter
+@NoArgsConstructor
 @Entity
 public class Trip extends BaseEntity {
+
+    // Идентификатор внешней системы
+    private Long tripId;
 
     @OneToOne
     private User user;
@@ -19,43 +29,4 @@ public class Trip extends BaseEntity {
     @OneToOne
     private Driver driver;
 
-    public Trip() {
-    }
-
-    public Trip(Car car, Driver driver) {
-        this.car = car;
-        this.driver = driver;
-    }
-
-    public Car getCar() {
-        return car;
-    }
-
-    public void setCar(Car car) {
-        this.car = car;
-    }
-
-    public Driver getDriver() {
-        return driver;
-    }
-
-    public void setDriver(Driver driver) {
-        this.driver = driver;
-    }
-
-    public User getUser() {
-        return user;
-    }
-
-    public void setUser(User user) {
-        this.user = user;
-    }
-
-    public Price getPrice() {
-        return price;
-    }
-
-    public void setPrice(Price price) {
-        this.price = price;
-    }
 }

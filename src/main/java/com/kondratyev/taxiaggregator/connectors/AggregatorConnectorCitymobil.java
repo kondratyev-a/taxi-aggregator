@@ -8,7 +8,10 @@ import com.kondratyev.taxiaggregator.responses.DeleteTripResponse;
 import com.kondratyev.taxiaggregator.responses.PriceResponse;
 import com.kondratyev.taxiaggregator.responses.TripResponse;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Component;
+
+import java.util.concurrent.CompletableFuture;
 
 @Slf4j
 @Component
@@ -19,10 +22,11 @@ public class AggregatorConnectorCitymobil implements AggregatorConnector {
         return 2L;
     }
 
+    @Async
     @Override
-    public PriceResponse getPrice(Long userId, String fromLocation, String toLocation) {
-        log.debug("get Citymobil price");
-        return DummyObject.getPriceResponse(getId(), fromLocation, toLocation);
+    public CompletableFuture<PriceResponse> getPrice(Long userId, String fromLocation, String toLocation) {
+        log.debug("geting Citymobil price in thread " + Thread.currentThread().getName());
+        return CompletableFuture.completedFuture(DummyObject.getPriceResponse(getId(), fromLocation, toLocation));
     }
 
     @Override

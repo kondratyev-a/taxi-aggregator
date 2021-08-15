@@ -12,10 +12,9 @@ import com.kondratyev.taxiaggregator.services.TripService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.List;
-import java.util.NoSuchElementException;
+import java.util.*;
+import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.ExecutionException;
 
 @Slf4j
 @Component
@@ -35,14 +34,27 @@ public class AggregatorRequest {
         this.tripService = tripService;
     }
 
-    public PriceResponse getPrice(Long userId, String fromLocation, String toLocation) {
+    public PriceResponse getPrice(Long userId, String fromLocation,
+                                  String toLocation) throws ExecutionException, InterruptedException {
 
         log.debug("Determining the best price");
 
-        // Вызываем все реализованные коннекторы
+        // Асинхронное получение цен
+        int numOfConnectors = aggregatorConnectors.size();
+        CompletableFuture<?>[] array = new CompletableFuture<?>[numOfConnectors];
+        for (int i = 0; i < numOfConnectors; i++) {
+            AggregatorConnector aggregatorConnector = aggregatorConnectors.get(i);
+            CompletableFuture<PriceResponse> response = aggregatorConnector.getPrice(userId, fromLocation, toLocation);
+            array[i] = response;
+        }
+
+        // Ждем завершения всех потоков.
+        CompletableFuture.allOf(CompletableFuture.allOf(array)).join();
+
+        // Достаем ответы из CompletableFuture
         List<PriceResponse> prices = new ArrayList<>();
-        for (AggregatorConnector aggregatorConnector: aggregatorConnectors) {
-            prices.add(aggregatorConnector.getPrice(userId, fromLocation, toLocation));
+        for (int i = 0; i < numOfConnectors; i++) {
+            prices.add((PriceResponse) array[i].get());
         }
 
         // Выбираем лучшее предложение (ближайший автомобиль, самая дешевая цена)
@@ -76,7 +88,7 @@ public class AggregatorRequest {
             // Вообще мне этот перебор совсем не нравится. Я думал реализовать через Factory Pattern,
             // но это добавляет необходимость явно указывать нового агрегатора при добавлении.
             // В общем сделал пока так, но хорошо бы переделать. Еще бы знать как.
-            if (aggregatorConnector.getId() == aggregatorId) {
+            if (Objects.equals(aggregatorConnector.getId(), aggregatorId)) {
                 TripResponse tripResponse = aggregatorConnector.createTrip(tripRequest, price);
                 return tripService.saveTripResponse(tripResponse);
             }
@@ -91,7 +103,7 @@ public class AggregatorRequest {
 
         // Вызываем все реализованные коннекторы
         for (AggregatorConnector aggregatorConnector: aggregatorConnectors) {
-            if (aggregatorConnector.getId() == aggregatorId) {
+            if (Objects.equals(aggregatorConnector.getId(), aggregatorId)) {
                 DeleteTripResponse deleteTripResponse = aggregatorConnector.deleteTrip(deleteTripRequest);
                 tripService.deleteById(tripToDelete.getId());
                 return deleteTripResponse;

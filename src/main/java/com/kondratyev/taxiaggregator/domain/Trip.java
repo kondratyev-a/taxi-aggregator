@@ -17,6 +17,8 @@ public class Trip extends BaseEntity {
     // Идентификатор внешней системы
     private Long tripId;
 
+    private long aggregatorId;
+
     @OneToOne
     private User user;
 

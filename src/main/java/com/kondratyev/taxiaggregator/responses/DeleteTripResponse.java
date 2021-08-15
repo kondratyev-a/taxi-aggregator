@@ -1,4 +1,4 @@
-package com.kondratyev.taxiaggregator.requests;
+package com.kondratyev.taxiaggregator.responses;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Getter;
@@ -8,7 +8,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @NoArgsConstructor
-public class DeleteTripRequest {
+public class DeleteTripResponse {
 
     @JsonProperty("trip_id")
     private Long tripId;

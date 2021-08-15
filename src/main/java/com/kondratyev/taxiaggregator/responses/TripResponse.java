@@ -1,5 +1,6 @@
 package com.kondratyev.taxiaggregator.responses;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -9,6 +10,9 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 public class TripResponse {
+
+    @JsonIgnore
+    private Long aggregatorId;
 
     @JsonProperty("user_id")
     private Long userId;

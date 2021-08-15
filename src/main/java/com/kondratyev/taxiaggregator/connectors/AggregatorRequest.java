@@ -1,7 +1,10 @@
 package com.kondratyev.taxiaggregator.connectors;
 
 import com.kondratyev.taxiaggregator.domain.Price;
+import com.kondratyev.taxiaggregator.domain.Trip;
 import com.kondratyev.taxiaggregator.requests.CreateTripRequest;
+import com.kondratyev.taxiaggregator.requests.DeleteTripRequest;
+import com.kondratyev.taxiaggregator.responses.DeleteTripResponse;
 import com.kondratyev.taxiaggregator.responses.PriceResponse;
 import com.kondratyev.taxiaggregator.responses.TripResponse;
 import com.kondratyev.taxiaggregator.services.PriceService;
@@ -76,6 +79,22 @@ public class AggregatorRequest {
             if (aggregatorConnector.getId() == aggregatorId) {
                 TripResponse tripResponse = aggregatorConnector.createTrip(tripRequest, price);
                 return tripService.saveTripResponse(tripResponse);
+            }
+        }
+        return null;
+    }
+
+    public DeleteTripResponse deleteTrip(DeleteTripRequest deleteTripRequest) {
+
+        Trip tripToDelete = tripService.findByTripId(deleteTripRequest.getTripId());
+        Long aggregatorId = tripToDelete.getAggregatorId();
+
+        // Вызываем все реализованные коннекторы
+        for (AggregatorConnector aggregatorConnector: aggregatorConnectors) {
+            if (aggregatorConnector.getId() == aggregatorId) {
+                DeleteTripResponse deleteTripResponse = aggregatorConnector.deleteTrip(deleteTripRequest);
+                tripService.deleteById(tripToDelete.getId());
+                return deleteTripResponse;
             }
         }
         return null;

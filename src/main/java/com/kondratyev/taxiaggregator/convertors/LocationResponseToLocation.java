@@ -24,9 +24,6 @@ public class LocationResponseToLocation implements Converter<LocationResponse, L
         location.setLatitude(locationResponse.getLatitude());
         location.setLongitude(locationResponse.getLongitude());
 
-        Location savedLocation = locationRepository.save(location);
-        log.debug("Saved LocationId: " + savedLocation.getId());
-
-        return savedLocation;
+        return location;
     }
 }

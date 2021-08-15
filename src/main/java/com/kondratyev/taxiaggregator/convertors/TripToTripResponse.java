@@ -31,6 +31,7 @@ public class TripToTripResponse implements Converter<Trip, TripResponse> {
 
         tripResponse.setUserId(trip.getUser().getId());
         tripResponse.setTripId(trip.getTripId());
+        tripResponse.setAggregatorId(trip.getAggregatorId());
         tripResponse.setPriceId(price.getPriceId());
         tripResponse.setPrice(price.getPrice());
         tripResponse.setDriver(driverConverter.convert(trip.getDriver()));

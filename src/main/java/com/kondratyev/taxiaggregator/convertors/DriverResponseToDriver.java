@@ -23,9 +23,6 @@ public class DriverResponseToDriver implements Converter<DriverResponse, Driver>
         driver.setRating(driverResponse.getRating());
         driver.setName(driverResponse.getName());
 
-        Driver savedDriver = driverRepository.save(driver);
-        log.debug("Saved DriverId: " + savedDriver.getId());
-
-        return savedDriver;
+        return driver;
     }
 }

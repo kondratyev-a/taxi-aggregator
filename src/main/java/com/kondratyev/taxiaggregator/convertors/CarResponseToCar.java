@@ -19,13 +19,12 @@ public class CarResponseToCar implements Converter<CarResponse, Car> {
 
     @Override
     public Car convert(CarResponse carResponse) {
+
         Car car = new Car();
+
         car.setCapacity(carResponse.getCapacity());
         car.setModel(carResponse.getModel());
 
-        Car savedCar = carRepository.save(car);
-        log.debug("Saved CarId: " + savedCar.getId());
-
-        return savedCar;
+        return car;
     }
 }

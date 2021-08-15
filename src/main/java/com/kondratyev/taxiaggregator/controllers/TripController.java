@@ -67,7 +67,7 @@ public class TripController {
         log.debug("Deleting the trip");
 
         Map<String, Object> response = new HashMap<>();
-        response.put("result", null);
+        response.put("result", aggregatorRequest.deleteTrip(deleteTripRequest));
         response.put("error", null);
 
         return response;

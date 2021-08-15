@@ -2,6 +2,7 @@ package com.kondratyev.taxiaggregator.dummies;
 
 import com.kondratyev.taxiaggregator.domain.Price;
 import com.kondratyev.taxiaggregator.requests.CreateTripRequest;
+import com.kondratyev.taxiaggregator.requests.DeleteTripRequest;
 import com.kondratyev.taxiaggregator.responses.*;
 
 import java.util.Random;
@@ -28,6 +29,7 @@ public class DummyObject {
         TripResponse tripResponse = new TripResponse();
 
         tripResponse.setTripId(4000172L);
+        tripResponse.setAggregatorId(price.getAggregatorId());
         tripResponse.setUserId(tripRequest.getUserId());
         tripResponse.setPriceId(tripRequest.getPriceId());
         tripResponse.setFrom(tripRequest.getFrom());
@@ -45,6 +47,12 @@ public class DummyObject {
         tripResponse.setCar(car);
 
         return tripResponse;
+    }
+
+    public static DeleteTripResponse deleteTrip(DeleteTripRequest deleteTripRequest) {
+        DeleteTripResponse deleteTripResponse = new DeleteTripResponse();
+        deleteTripResponse.setTripId(deleteTripRequest.getTripId());
+        return deleteTripResponse;
     }
 
 }

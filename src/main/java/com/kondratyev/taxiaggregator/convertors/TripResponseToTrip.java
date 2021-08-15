@@ -29,16 +29,14 @@ public class TripResponseToTrip implements Converter<TripResponse, Trip> {
 
     @Override
     public Trip convert(TripResponse tripResponse) {
+
         Trip trip = new Trip();
 
         trip.setTripId(tripResponse.getTripId());
-
+        trip.setAggregatorId(tripResponse.getAggregatorId());
         trip.setUser(userService.findById(tripResponse.getUserId()));
-
         trip.setPrice(priceService.findByPriceId(tripResponse.getPriceId()));
-
         trip.setCar(carService.saveCarResponse(tripResponse.getCar()));
-
         trip.setDriver(driverService.saveDriverResponse(tripResponse.getDriver()));
 
         return trip;

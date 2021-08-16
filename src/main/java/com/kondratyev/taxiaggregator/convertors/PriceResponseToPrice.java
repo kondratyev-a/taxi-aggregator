@@ -20,6 +20,10 @@ public class PriceResponseToPrice  implements Converter<PriceResponse, Price> {
 
     @Override
     public Price convert(PriceResponse priceResponse) {
+        if (priceResponse == null) {
+            return null;
+        }
+
         Price price = new Price();
 
         price.setAggregatorId(priceResponse.getAggregatorId());

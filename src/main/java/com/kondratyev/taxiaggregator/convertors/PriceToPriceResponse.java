@@ -17,8 +17,13 @@ public class PriceToPriceResponse implements Converter<Price, PriceResponse> {
     @Override
     public PriceResponse convert(Price price) {
 
+        if (price == null) {
+            return null;
+        }
+
         PriceResponse priceResponse = new PriceResponse();
 
+        priceResponse.setAggregatorId(price.getAggregatorId());
         priceResponse.setPriceId(price.getPriceId());
         priceResponse.setPrice(price.getPrice());
         priceResponse.setPriceLevel(price.getPriceLevel().ordinal());

@@ -105,6 +105,7 @@ public class AggregatorRequest {
         for (AggregatorConnector aggregatorConnector: aggregatorConnectors) {
             if (Objects.equals(aggregatorConnector.getId(), aggregatorId)) {
                 DeleteTripResponse deleteTripResponse = aggregatorConnector.deleteTrip(deleteTripRequest);
+                // Вообще, конечно лучше не удалять объект из базы, а взводить какой-то флаг.
                 tripService.deleteById(tripToDelete.getId());
                 return deleteTripResponse;
             }

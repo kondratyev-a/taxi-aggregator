@@ -21,6 +21,9 @@ public class LocationServiceImpl implements LocationService {
 
     @Override
     public Location saveLocationResponse(LocationResponse locationResponse) {
+        if (locationResponse == null) {
+            return null;
+        }
         Location convertedLocation = locationResponseToLocation.convert(locationResponse);
 
         Location savedLocation = locationRepository.save(convertedLocation);

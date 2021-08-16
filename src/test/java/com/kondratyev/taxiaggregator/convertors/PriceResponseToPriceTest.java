@@ -18,9 +18,11 @@ class PriceResponseToPriceTest {
 
     public static final int PRICE = 415;
     public static final Long AGGREGATOR_ID = 12L;
+    public static final Long USER_ID = 1863L;
     public static final Long PRICE_ID = 3921215L;
     public static final String LOCATION = "55.035705,82.896254";
     public static final int PRICE_LEVEL = 1;
+
 
     @Mock
     LocationService locationService;
@@ -34,17 +36,13 @@ class PriceResponseToPriceTest {
     }
 
     @Test
-    public void testNullObject() {
-        assertNull(converter.convert(null));
-    }
-
-    @Test
     void convert() {
 
         when(locationService.saveLocationResponse(any())).thenReturn(new Location(LOCATION));
 
         PriceResponse priceResponse = new PriceResponse();
         priceResponse.setPrice(PRICE);
+        priceResponse.setUserId(USER_ID);
         priceResponse.setAggregatorId(AGGREGATOR_ID);
         priceResponse.setPriceId(PRICE_ID);
         priceResponse.setFrom(new LocationResponse(LOCATION));
@@ -55,11 +53,12 @@ class PriceResponseToPriceTest {
 
         assertNotNull(price);
         assertEquals(PRICE, price.getPrice());
+        assertEquals(USER_ID, price.getUserId());
         assertEquals(AGGREGATOR_ID, price.getAggregatorId());
         assertEquals(PRICE_ID, price.getPriceId());
         assertEquals(LOCATION, price.getFrom().toString());
         assertEquals(LOCATION, price.getTo().toString());
-        assertEquals(PRICE_LEVEL, price.getPriceLevel().ordinal());
+        assertEquals(PRICE_LEVEL, price.getPriceLevel().getValue());
 
     }
 }

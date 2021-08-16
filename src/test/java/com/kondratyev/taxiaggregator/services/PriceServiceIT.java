@@ -3,7 +3,6 @@ package com.kondratyev.taxiaggregator.services;
 import com.kondratyev.taxiaggregator.domain.Price;
 import com.kondratyev.taxiaggregator.responses.LocationResponse;
 import com.kondratyev.taxiaggregator.responses.PriceResponse;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,10 +21,6 @@ class PriceServiceIT {
 
     final Long priceId = 2921215L;
     final int amount = 342;
-
-    @BeforeEach
-    void setUp() {
-    }
 
     @Test
     void savePriceResponse() {

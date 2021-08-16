@@ -18,6 +18,7 @@ class PriceToPriceResponseTest {
 
     public static final int PRICE = 415;
     public static final Long AGGREGATOR_ID = 12L;
+    public static final Long USER_ID = 1863L;
     public static final Long PRICE_ID = 3921215L;
     public static final String LOCATION = "55.035705,82.896254";
     public static final PriceLevel PRICE_LEVEL = PriceLevel.PREMIUM;
@@ -34,11 +35,6 @@ class PriceToPriceResponseTest {
     }
 
     @Test
-    public void testNullObject() {
-        assertNull(converter.convert(null));
-    }
-
-    @Test
     void convert() {
 
         when(locationConverter.convert(any())).thenReturn(new LocationResponse(LOCATION));
@@ -46,6 +42,7 @@ class PriceToPriceResponseTest {
         Price price = new Price();
         price.setPrice(PRICE);
         price.setAggregatorId(AGGREGATOR_ID);
+        price.setUserId(USER_ID);
         price.setPriceId(PRICE_ID);
         price.setFrom(new Location(LOCATION));
         price.setTo(new Location(LOCATION));
@@ -55,11 +52,12 @@ class PriceToPriceResponseTest {
 
         assertNotNull(price);
         assertEquals(PRICE, priceResponse.getPrice());
+        assertEquals(USER_ID, priceResponse.getUserId());
         assertEquals(AGGREGATOR_ID, priceResponse.getAggregatorId());
         assertEquals(PRICE_ID, priceResponse.getPriceId());
         assertEquals(LOCATION, priceResponse.getFrom().toString());
         assertEquals(LOCATION, priceResponse.getTo().toString());
-        assertEquals(PRICE_LEVEL, PriceLevel.values()[priceResponse.getPriceLevel()]);
+        assertEquals(PRICE_LEVEL, PriceLevel.fromValue(priceResponse.getPriceLevel()));
 
     }
 }

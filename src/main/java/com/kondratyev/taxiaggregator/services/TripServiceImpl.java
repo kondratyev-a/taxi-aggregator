@@ -39,6 +39,10 @@ public class TripServiceImpl implements TripService {
     public TripResponse saveTripResponse(TripResponse tripResponse) {
         Trip convertedTrip = tripResponseToTrip.convert(tripResponse);
 
+        if (convertedTrip == null) {
+            throw new IllegalArgumentException();
+        }
+
         Trip savedTrip = tripRepository.save(convertedTrip);
         log.debug("Saved TripId: " + savedTrip.getId());
         return tripToTripResponse.convert(savedTrip);

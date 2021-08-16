@@ -19,8 +19,7 @@ public class Trip extends BaseEntity {
 
     private long aggregatorId;
 
-    @OneToOne
-    private User user;
+    private Long userId;
 
     @OneToOne
     private Price price;

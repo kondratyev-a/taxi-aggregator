@@ -26,7 +26,7 @@ public class AggregatorConnectorCitymobil implements AggregatorConnector {
     @Override
     public CompletableFuture<PriceResponse> getPrice(Long userId, String fromLocation, String toLocation) {
         log.debug("geting Citymobil price in thread " + Thread.currentThread().getName());
-        return CompletableFuture.completedFuture(DummyObject.getPriceResponse(getId(), fromLocation, toLocation));
+        return CompletableFuture.completedFuture(DummyObject.getPriceResponse(userId, getId(), fromLocation, toLocation));
     }
 
     @Override

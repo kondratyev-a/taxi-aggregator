@@ -23,6 +23,10 @@ public class CarServiceImpl implements CarService {
     public Car saveCarResponse(CarResponse carResponse) {
         Car convertedCar = carResponseToCar.convert(carResponse);
 
+        if (convertedCar == null) {
+            throw new IllegalArgumentException();
+        }
+
         Car savedCar = carRepository.save(convertedCar);
         log.debug("Saved CarId: " + savedCar.getId());
         return savedCar;

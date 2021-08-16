@@ -39,6 +39,10 @@ public class PriceServiceImpl implements PriceService {
     public PriceResponse savePriceResponse(PriceResponse priceResponse) {
         Price convertedPrice = priceResponseToPrice.convert(priceResponse);
 
+        if (convertedPrice == null) {
+            throw new IllegalArgumentException();
+        }
+
         Price savedPrice = priceRepository.save(convertedPrice);
         log.debug("Saved PriceId: " + savedPrice.getId());
         return priceToPriceResponse.convert(savedPrice);

@@ -29,7 +29,7 @@ public class TripToTripResponse implements Converter<Trip, TripResponse> {
 
         TripResponse tripResponse = new TripResponse();
 
-        tripResponse.setUserId(trip.getUser().getId());
+        tripResponse.setUserId(trip.getUserId());
         tripResponse.setTripId(trip.getTripId());
         tripResponse.setAggregatorId(trip.getAggregatorId());
         tripResponse.setPriceId(price.getPriceId());

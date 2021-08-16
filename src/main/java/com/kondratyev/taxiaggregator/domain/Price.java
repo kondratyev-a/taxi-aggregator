@@ -18,6 +18,8 @@ public class Price extends BaseEntity {
     // Идентификатор внешней системы
     private Long priceId;
 
+    private Long userId;
+
     private long aggregatorId;
 
     private int price;

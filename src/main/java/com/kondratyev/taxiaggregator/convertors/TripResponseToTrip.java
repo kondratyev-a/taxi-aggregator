@@ -15,14 +15,12 @@ import org.springframework.stereotype.Component;
 public class TripResponseToTrip implements Converter<TripResponse, Trip> {
 
     private final PriceService priceService;
-    private final UserService userService;
     private final DriverService driverService;
     private final CarService carService;
 
     public TripResponseToTrip(PriceService priceService, UserService userService,
                               DriverService driverService, CarService carService) {
         this.priceService = priceService;
-        this.userService = userService;
         this.driverService = driverService;
         this.carService = carService;
     }
@@ -34,7 +32,7 @@ public class TripResponseToTrip implements Converter<TripResponse, Trip> {
 
         trip.setTripId(tripResponse.getTripId());
         trip.setAggregatorId(tripResponse.getAggregatorId());
-        trip.setUser(userService.findById(tripResponse.getUserId()));
+        trip.setUserId(tripResponse.getUserId());
         trip.setPrice(priceService.findByPriceId(tripResponse.getPriceId()));
         trip.setCar(carService.saveCarResponse(tripResponse.getCar()));
         trip.setDriver(driverService.saveDriverResponse(tripResponse.getDriver()));

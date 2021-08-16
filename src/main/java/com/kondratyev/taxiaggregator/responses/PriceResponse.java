@@ -13,6 +13,7 @@ public class PriceResponse {
     @JsonIgnore
     private Long aggregatorId;
 
+    private Long userId;
     private Long priceId;
     private int price;
     private int priceLevel;

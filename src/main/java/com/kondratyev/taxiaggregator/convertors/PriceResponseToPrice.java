@@ -20,16 +20,13 @@ public class PriceResponseToPrice  implements Converter<PriceResponse, Price> {
 
     @Override
     public Price convert(PriceResponse priceResponse) {
-        if (priceResponse == null) {
-            return null;
-        }
-
         Price price = new Price();
 
+        price.setUserId(priceResponse.getUserId());
         price.setAggregatorId(priceResponse.getAggregatorId());
         price.setPriceId(priceResponse.getPriceId());
         price.setPrice(priceResponse.getPrice());
-        price.setPriceLevel(PriceLevel.values()[priceResponse.getPriceLevel()]);
+        price.setPriceLevel(PriceLevel.fromValue(priceResponse.getPriceLevel()));
         price.setFrom(locationService.saveLocationResponse(priceResponse.getFrom()));
         price.setTo(locationService.saveLocationResponse(priceResponse.getTo()));
 

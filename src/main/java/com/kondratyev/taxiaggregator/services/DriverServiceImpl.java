@@ -20,7 +20,12 @@ public class DriverServiceImpl implements DriverService {
 
     @Override
     public Driver saveDriverResponse(DriverResponse driverResponse) {
+
         Driver convertedDriver = driverResponseToDriver.convert(driverResponse);
+
+        if (convertedDriver == null) {
+            throw new IllegalArgumentException();
+        }
 
         Driver savedDriver = driverRepository.save(convertedDriver);
         log.debug("Saved DriverId: " + savedDriver.getId());

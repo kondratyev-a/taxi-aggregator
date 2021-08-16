@@ -10,12 +10,14 @@ import java.util.Random;
 // Класс для имитации ответов от вызова методов агрегаторов
 public class DummyObject {
 
-    public static PriceResponse getPriceResponse(Long aggregatorId, String fromLocation, String toLocation) {
+    public static PriceResponse getPriceResponse(Long userId, Long aggregatorId,
+                                                 String fromLocation, String toLocation) {
 
         PriceResponse dummyPrice = new PriceResponse();
 
         Random random = new Random();
         dummyPrice.setPrice(random.nextInt(300));
+        dummyPrice.setUserId(userId);
         dummyPrice.setAggregatorId(aggregatorId);
         dummyPrice.setPriceId(2921215L);
         dummyPrice.setFrom(new LocationResponse(fromLocation));

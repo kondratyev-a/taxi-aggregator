@@ -26,6 +26,10 @@ public class LocationServiceImpl implements LocationService {
         }
         Location convertedLocation = locationResponseToLocation.convert(locationResponse);
 
+        if (convertedLocation == null) {
+            throw new IllegalArgumentException();
+        }
+
         Location savedLocation = locationRepository.save(convertedLocation);
         log.debug("Saved LocationId: " + savedLocation.getId());
         return savedLocation;

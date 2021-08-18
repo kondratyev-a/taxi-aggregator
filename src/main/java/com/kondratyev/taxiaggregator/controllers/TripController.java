@@ -14,6 +14,7 @@ import java.util.Map;
 
 @Slf4j
 @RestController
+@RequestMapping("/trips")
 public class TripController {
 
     private final AggregatorRequest aggregatorRequest;
@@ -23,7 +24,7 @@ public class TripController {
     }
 
     // Создание заказа
-    @PostMapping("/trips")
+    @PostMapping
     Map<String, Object> createTrip(@RequestBody CreateTripRequest createTripRequest) {
 
         log.debug("Creating a trip");
@@ -46,7 +47,7 @@ public class TripController {
     }
 
     // Получение информации по заказу
-    @GetMapping("/trips")
+    @GetMapping
     Map<String, Object> getTrip(@RequestParam(name = "user_id") Long userId,
                                 @RequestParam(name = "trip_id") Long tripId) {
 
@@ -60,7 +61,7 @@ public class TripController {
     }
 
     // Обновление информации по заказу
-    @PutMapping("/trips")
+    @PutMapping
     Map<String, Object> updateTrip(@RequestBody UpdateTripRequest updateTripRequest) {
 
         log.debug("Updating info about the trip");
@@ -73,7 +74,7 @@ public class TripController {
     }
 
     // Удаление заказа
-    @DeleteMapping("/trips")
+    @DeleteMapping
     Map<String, Object> deleteTrip(@RequestBody DeleteTripRequest deleteTripRequest) {
 
         log.debug("Deleting the trip");

@@ -6,6 +6,7 @@ import com.kondratyev.taxiaggregator.repositories.CarRepository;
 import com.kondratyev.taxiaggregator.responses.CarResponse;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Slf4j
 @Service
@@ -20,6 +21,7 @@ public class CarServiceImpl implements CarService {
     }
 
     @Override
+    @Transactional
     public Car saveCarResponse(CarResponse carResponse) {
         Car convertedCar = carResponseToCar.convert(carResponse);
 

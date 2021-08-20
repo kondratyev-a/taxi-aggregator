@@ -6,6 +6,7 @@ import com.kondratyev.taxiaggregator.repositories.LocationRepository;
 import com.kondratyev.taxiaggregator.responses.LocationResponse;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Slf4j
 @Service
@@ -20,6 +21,7 @@ public class LocationServiceImpl implements LocationService {
     }
 
     @Override
+    @Transactional
     public Location saveLocationResponse(LocationResponse locationResponse) {
         if (locationResponse == null) {
             return null;

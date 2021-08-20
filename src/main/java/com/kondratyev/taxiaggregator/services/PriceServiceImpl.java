@@ -8,6 +8,7 @@ import com.kondratyev.taxiaggregator.repositories.PriceRepository;
 import com.kondratyev.taxiaggregator.responses.PriceResponse;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Optional;
 
@@ -36,6 +37,7 @@ public class PriceServiceImpl implements PriceService {
     }
 
     @Override
+    @Transactional
     public PriceResponse savePriceResponse(PriceResponse priceResponse) {
         Price convertedPrice = priceResponseToPrice.convert(priceResponse);
 

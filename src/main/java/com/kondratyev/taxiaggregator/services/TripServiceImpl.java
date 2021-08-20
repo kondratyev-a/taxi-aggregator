@@ -8,6 +8,7 @@ import com.kondratyev.taxiaggregator.repositories.TripRepository;
 import com.kondratyev.taxiaggregator.responses.TripResponse;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Optional;
 
@@ -36,6 +37,7 @@ public class TripServiceImpl implements TripService {
     }
 
     @Override
+    @Transactional
     public TripResponse saveTripResponse(TripResponse tripResponse) {
         Trip convertedTrip = tripResponseToTrip.convert(tripResponse);
 

@@ -6,6 +6,7 @@ import com.kondratyev.taxiaggregator.repositories.DriverRepository;
 import com.kondratyev.taxiaggregator.responses.DriverResponse;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Slf4j
 @Service
@@ -19,6 +20,7 @@ public class DriverServiceImpl implements DriverService {
     }
 
     @Override
+    @Transactional
     public Driver saveDriverResponse(DriverResponse driverResponse) {
 
         Driver convertedDriver = driverResponseToDriver.convert(driverResponse);

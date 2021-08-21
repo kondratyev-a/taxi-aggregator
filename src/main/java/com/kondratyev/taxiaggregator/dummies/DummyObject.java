@@ -7,7 +7,9 @@ import com.kondratyev.taxiaggregator.responses.*;
 
 import java.util.Random;
 
-// Класс для имитации ответов от вызова методов агрегаторов
+/**
+ * A class for simulating responses from calls to aggregator methods
+ */
 public class DummyObject {
 
     public static PriceResponse getPriceResponse(Long userId, Long aggregatorId,
@@ -40,12 +42,12 @@ public class DummyObject {
 
         DriverResponse driver = new DriverResponse();
         driver.setRating(4.52d);
-        driver.setName("Эмильен");
+        driver.setName("Emilien ");
         tripResponse.setDriver(driver);
 
         CarResponse car = new CarResponse();
         car.setCapacity(3);
-        car.setModel("Skoda Octavia");
+        car.setModel("Mercedes g63");
         tripResponse.setCar(car);
 
         return tripResponse;

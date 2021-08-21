@@ -20,8 +20,7 @@ import java.util.Map;
 @Component
 public class AggregatorRequestImpl implements AggregatorRequest {
 
-    // Spring автоматически привяжет все имплементации и при добавлении нового провайдера
-    // не нужно будет переписывать существующие классы.
+    // Spring will automatically bind all implementations and when adding a new provider
     private final List<AggregatorConnector> aggregatorConnectors;
 
     private final PriceService priceService;
@@ -41,16 +40,12 @@ public class AggregatorRequestImpl implements AggregatorRequest {
 
         PriceResponse bestPrice = PriceAggregatorRequest.getPriceResponse(aggregatorConnectors, userId, fromLocation, toLocation);
 
-        // Конвертируем во внутренний объект и сохраняем лучшее предложение в базу
-        // т.к. мы отправляем его клиенту и по нему он может создать заказ.
-        // Затем конвертируем обратно и возвращаем в качестве ответа.
-        // Сохранять все варианты цен я не вижу смысла т.к. по сути это сеансовые данные.
+        // I see no reason to keep all the prices. it is essentially session data.
         return priceService.savePriceResponse(bestPrice);
     }
 
     public TripResponse createTrip(CreateTripRequest tripRequest) {
 
-        // Получаем цену по идентификатору
         Price price = priceService.findByPriceId(tripRequest.getPriceId());
         Long aggregatorId = price.getAggregatorId();
         AggregatorConnector aggregatorConnector = aggregators.get(aggregatorId);

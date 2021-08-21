@@ -15,7 +15,7 @@ import javax.persistence.OneToOne;
 @Entity
 public class Price extends BaseEntity {
 
-    // Идентификатор внешней системы
+    // External system identifier
     private Long priceId;
 
     private Long userId;

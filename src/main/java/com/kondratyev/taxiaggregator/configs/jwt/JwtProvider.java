@@ -14,7 +14,7 @@ import java.util.Date;
 @Log
 public class JwtProvider {
 
-    // Не лучшая идея
+    // Only for the test purpose
     private final String jwtSecret = "eyJhbGciOiJIUzI1NiJ9.eyJSb2xlIjoiQWRtaW4iLCJJc3N1ZXIiOiJJciLCJVc2VybmFtZSI6Ikph";
 
     public String generateToken(String login) {

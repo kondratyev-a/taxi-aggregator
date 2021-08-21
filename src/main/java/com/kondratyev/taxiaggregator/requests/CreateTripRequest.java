@@ -13,9 +13,8 @@ public class CreateTripRequest {
     @JsonProperty("price_id")
     private Long priceId;
 
-    // Не вижу смысла передавать эти данные при создании поездки.
-    // Мы по сути подтверждаем ценовое предложение. А там информация откуда/куда уже есть.
-    // Хотя в API iway они передаются.
+    // There is no reason to send this data when creating a trip.
+    // We are confirming the price. And we have this data there.
     @JsonProperty("start_location")
     private LocationResponse from;
 

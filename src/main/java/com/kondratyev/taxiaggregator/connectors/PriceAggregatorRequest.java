@@ -17,7 +17,7 @@ public class PriceAggregatorRequest {
                                                  Long userId, String fromLocation, String toLocation) {
 
         log.debug("Determining the best price");
-        // Асинхронное получение цен
+        // Asynchronous getting prices.
         int numOfConnectors = aggregatorConnectors.size();
         CompletableFuture<?>[] array = new CompletableFuture<?>[numOfConnectors];
         for (int i = 0; i < numOfConnectors; i++) {
@@ -26,7 +26,7 @@ public class PriceAggregatorRequest {
             array[i] = response;
         }
 
-        // Ждем завершения всех потоков.
+        // We are waiting for the completion of all threads.
         CompletableFuture.allOf(CompletableFuture.allOf(array)).join();
 
         // Getting responses from CompletableFuture
@@ -40,8 +40,8 @@ public class PriceAggregatorRequest {
             }
         }
 
-        // Выбираем лучшее предложение (ближайший автомобиль, самая дешевая цена)
-        // Тут должен быть какой-то алгоритм. Для тестового задания - берем минимальную цену.
+        // We need to choose the best price (the nearest car, the cheapest price).
+        // There must be some kind of algorithm. For a test task, we take the minimum price.
         return chooseBestPrice(prices);
     }
 

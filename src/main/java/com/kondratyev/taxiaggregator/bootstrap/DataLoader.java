@@ -29,13 +29,13 @@ public class DataLoader implements CommandLineRunner {
         log.debug("Starting loading users");
 
         User ivan = new User();
-        ivan.setName("Иван Петров");
+        ivan.setName("Ivan Petrov");
         ivan.setLogin("ivan");
         ivan.setPassword("password");
         userService.saveUser(ivan);
 
         User petr = new User();
-        petr.setName("Петр Иванов");
+        petr.setName("Petr Ivanov");
         petr.setLogin("petr");
         petr.setPassword("password");
         userService.saveUser(petr);

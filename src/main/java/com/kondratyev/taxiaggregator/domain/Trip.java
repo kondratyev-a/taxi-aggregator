@@ -7,14 +7,14 @@ import lombok.Setter;
 import javax.persistence.Entity;
 import javax.persistence.OneToOne;
 
-// Если использовать имя Order, то Hibernate валится при запуске
+// If you use the name Order, then Hibernate crashes on startup
 @Getter
 @Setter
 @NoArgsConstructor
 @Entity
 public class Trip extends BaseEntity {
 
-    // Идентификатор внешней системы
+    // External system identifier
     private Long tripId;
 
     private long aggregatorId;

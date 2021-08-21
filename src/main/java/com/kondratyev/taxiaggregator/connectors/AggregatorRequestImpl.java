@@ -60,7 +60,7 @@ public class AggregatorRequestImpl implements AggregatorRequest {
                 return tripService.saveTripResponse(tripResponse);
             }
         }
-        return null;
+        throw new RuntimeException("Can't create trip for price id: " + tripRequest.getPriceId());
     }
 
     public DeleteTripResponse deleteTrip(DeleteTripRequest deleteTripRequest) {
@@ -77,6 +77,6 @@ public class AggregatorRequestImpl implements AggregatorRequest {
                 return deleteTripResponse;
             }
         }
-        return null;
+        throw new RuntimeException("Can't delete the trip with id: " + deleteTripRequest.getTripId());
     }
 }

@@ -1,20 +1,29 @@
-## Что было сделано в тестовом задании:
-- Функциональность регистрации, аутентификации, поиска цен, создания поездки, удаления поездки
-- Базовые сущности в виде POJO для хранения в базе данных. Работа с базой данных ведется через JpaRepository.
-- Аутентификация с использованием JWT токенов через Spring Boot Security.
-- В качестве параметров и ответов сервисов использовал DTO объекты чтобы не привязывать реализацию к внутренней структуре данных системы. А так же конверторы для DTO.
-- Все данные хранятся в im-memory H2 базе данных для скорости реализации. Конечно, в реальной задаче я бы использовал, например, PostgreSQL.
-- Все зависимости реализуются через Spring контекст при помощи Dependency Injection
-- Сам API реализован через Spring Web и контроллеры с аннотациями @RestController
-- Асинхронное получение цен через аннотацию @Async. В лог пишутся номера потоков исполнения
+# Taxi aggregator aggregation service
+The service should provide REST API to aggregate different taxi aggregators.
+There are no real taxi aggregator connectors used.
+The service is designed to demonstrate architecture and REST API.
 
-## Что оставил за рамками тестового задания:
-- Не использовал Hateoas для Rest т.к. в iway api он не используется.
-- Получение и обновление информации о поездке, т.к. про них не было написано в тестовом задании.
-- Не прорабатывал детально состав полей т.к. в первую очередь сервис нужно проектировать исходя из реализации агрегаторов, и в них можно посмотреть какими полями они оперируют.
-- Нормальное описание API. Сделал только автоматическую документацию из Postman.
-- Нет проверок на уникальности при записи в базу. Т.е., например, одинаковые локации будут записаны в базу два раза.
-- Не делал полный набор тестов. Только показательные для каждой группы. Тестов должно быть намного больше.
+## Service features
+- Users registration and further authentication using tokens
+- Getting prices in asynchronous mode
+- Creating and deleting a trip
 
-Тестовая коллекция Postman с вызовами [тут](https://www.postman.com/collections/ec433eab5e15081877db)
-В читабельном виде документацию к API можно посмотреть [тут](https://documenter.getpostman.com/view/9816918/Tzz8rcnY)
+## Used technologies
+- **Java 11** as the main programming language
+- **Spring Boot** to set up initial dependencies and to use different profiles
+- **Spring Security** to authenticate using JWT tokens
+- **Spring Web** to implement REST API using @RestController annotations
+- **Spring Data JPA** to easily implement JPA based repositories
+- **Hibernate** to map Java POJO's to database tables
+- **H2 Database** to store data in-memory.  In the real task, the database should be another
+- **DTO and converters** to convert data for the presentation layer
+- **Maven** to manage dependencies for builds
+- **JUnit 5** and **Mockito** for unit and integration tests
+
+## Notes
+- Hateoas wasn't used in the rest API
+- Retrieving and updating trip information were declared but not implemented
+
+## Documentation
+- Postman collection to test api [here](https://www.postman.com/collections/ec433eab5e15081877db)  
+- Postman documentation for api [here](https://documenter.getpostman.com/view/9816918/Tzz8rcnY)

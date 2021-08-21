@@ -46,7 +46,6 @@ class PriceControllerTest {
                         .param("finish_place_point", LOCATION))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType("application/json"))
-                .andExpect(jsonPath("$", notNullValue()))
-                .andExpect(jsonPath("$.result", notNullValue()));
+                .andExpect(jsonPath("$", notNullValue()));
     }
 }

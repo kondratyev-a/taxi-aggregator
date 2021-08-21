@@ -12,8 +12,9 @@ import com.kondratyev.taxiaggregator.services.TripService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
+import java.util.HashMap;
 import java.util.List;
-import java.util.Objects;
+import java.util.Map;
 
 @Slf4j
 @Component
@@ -25,12 +26,15 @@ public class AggregatorRequestImpl implements AggregatorRequest {
 
     private final PriceService priceService;
     private final TripService tripService;
+    private final Map<Long, AggregatorConnector> aggregators = new HashMap<>();
 
     AggregatorRequestImpl(List<AggregatorConnector> aggregatorConnectors, PriceService priceService,
-                      TripService tripService) {
+                          TripService tripService) {
         this.aggregatorConnectors = aggregatorConnectors;
         this.priceService = priceService;
         this.tripService = tripService;
+        aggregatorConnectors.forEach(aggregatorConnector -> this.aggregators.put(
+                aggregatorConnector.getId(), aggregatorConnector));
     }
 
     public PriceResponse getPrice(Long userId, String fromLocation, String toLocation) {
@@ -49,34 +53,22 @@ public class AggregatorRequestImpl implements AggregatorRequest {
         // Получаем цену по идентификатору
         Price price = priceService.findByPriceId(tripRequest.getPriceId());
         Long aggregatorId = price.getAggregatorId();
+        AggregatorConnector aggregatorConnector = aggregators.get(aggregatorId);
 
-        // Вызываем все реализованные коннекторы
-        for (AggregatorConnector aggregatorConnector: aggregatorConnectors) {
-            // Вообще мне этот перебор совсем не нравится. Я думал реализовать через Factory Pattern,
-            // но это добавляет необходимость явно указывать нового агрегатора при добавлении.
-            // В общем сделал пока так, но хорошо бы переделать. Еще бы знать как.
-            if (Objects.equals(aggregatorConnector.getId(), aggregatorId)) {
-                TripResponse tripResponse = aggregatorConnector.createTrip(tripRequest, price);
-                return tripService.saveTripResponse(tripResponse);
-            }
-        }
-        throw new RuntimeException("Can't create trip for price id: " + tripRequest.getPriceId());
+        TripResponse tripResponse = aggregatorConnector.createTrip(tripRequest, price);
+
+        return tripService.saveTripResponse(tripResponse);
     }
 
     public DeleteTripResponse deleteTrip(DeleteTripRequest deleteTripRequest) {
 
         Trip tripToDelete = tripService.findByTripId(deleteTripRequest.getTripId());
         Long aggregatorId = tripToDelete.getAggregatorId();
+        AggregatorConnector aggregatorConnector = aggregators.get(aggregatorId);
 
-        // Вызываем все реализованные коннекторы
-        for (AggregatorConnector aggregatorConnector: aggregatorConnectors) {
-            if (Objects.equals(aggregatorConnector.getId(), aggregatorId)) {
-                DeleteTripResponse deleteTripResponse = aggregatorConnector.deleteTrip(deleteTripRequest);
-                // Вообще, конечно лучше не удалять объект из базы, а взводить какой-то флаг.
-                tripService.deleteById(tripToDelete.getId());
-                return deleteTripResponse;
-            }
-        }
-        throw new RuntimeException("Can't delete the trip with id: " + deleteTripRequest.getTripId());
+        DeleteTripResponse deleteTripResponse = aggregatorConnector.deleteTrip(deleteTripRequest);
+        tripService.deleteById(tripToDelete.getId());
+
+        return deleteTripResponse;
     }
 }
